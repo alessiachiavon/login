@@ -1,0 +1,10 @@
+<!-- views/profile.handlebars -->
+<h1>Perfil de Usuario</h1>
+{{#if first_name}}<p>Nombre: {{first_name}} {{last_name}}</p>
+<p>Email: {{email}}</p>
+<p>Edad: {{age}}</p>
+{{/if}}
+<p>{{role}}</p>
+<form method="POST" action="/profile">
+<button type="submit">Logout!</button>
+</form>
