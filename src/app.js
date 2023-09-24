@@ -23,6 +23,8 @@ mongoose.connect( "mongodb+srv://alessiachiavon:aleC93272940@cluster0.q6ja3n2.mo
 
 app.use(express.urlencoded({ extended: true }));
 
+initializePassport();
+
 app.use(session({
     store: MongoStore.create({
         mongoUrl: 'mongodb+srv://alessiachiavon:aleC93272940@cluster0.q6ja3n2.mongodb.net/?retryWrites=true&w=majority',
@@ -34,6 +36,7 @@ app.use(session({
     saveUninitialized: true,
 }));
 
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -42,7 +45,7 @@ app.set("views", __dirname + '/views')
 app.set("view engine", "handlebars")
 
 
-app.use('/', sessionsRouter);
+app.use('/api/sessions', sessionsRouter);
 app.use('/', viewsRouter);
 app.use('/', loginRouter);
 
