@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const cartModel = require('../models/carts');
 const { createHash, isValidatePassword } = require('../../utils');
 const passport = require("passport")
 const hashedPassword = "$2b$10$KXFuD5y5rV6zzcu7pwWi6.RfgTF2iHyTTR/OubBSqJCAKlf3ST9k2"
@@ -37,10 +38,16 @@ router.post('/login', async (req, res) => {
     
     if (!isValidatePassword(user, password)) return res.status(403).send({ status: "error", error: "Password incorrecto" })
     delete user.password
+    if (!user.cart){
+        let newCart = await cartModel.create({})
+        user.cart = newCart.id
+        let result = await User.updateOne({ _id: user._id }, {cart: newCart.id})
+    }
     req.session.user = user
     }
     delete password
     //res.send({ status: "success", payload: user })
+    
     res.redirect('/profile');
 
 });

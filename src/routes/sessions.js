@@ -24,12 +24,18 @@ router.post('/register', async (req, res) => {
         last_name,
         email,
         age,
-        password: hashedPassword
+        password: hashedPassword,
+        cart: cartId,
     });
 
     /* res.send({ status: "success", payload: user });*/
     console.log('Usuario registrado con éxito.' + user);
     res.redirect('/login');
 });
+
+router.get("/current", async(req, res) => {
+    
+    res.send({ result: "success", payload: req.session.user })
+})
 
 module.exports = router;
